@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GigaMerge Studio - 45 Day Master Roadmap</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .header .dates {
+            font-size: 1.5em;
+            color: #666;
+            font-weight: bold;
+        }
+        
+        .header .goal {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 10px;
+            font-size: 1.3em;
+        }
+        
+        .metrics-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .metric-card .number {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .metric-card .label {
+            font-size: 1em;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .section h2 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 25px;
+            border-left: 6px solid #764ba2;
+            padding-left: 20px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 30px 0;
+        }
+        
+        .week-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .week-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .week-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+        
+        .week-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .week-card .focus {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            font-style: italic;
+            position: relative;
+        }
+        
+        .week-card ul {
+            list-style: none;
+            position: relative;
+        }
+        
+        .week-card li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .week-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .daily-tracker {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .daily-tracker h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .daily-task {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .daily-task .task-info {
+            flex: 1;
+        }
+        
+        .daily-task .time {
+            font-weight: bold;
+            color: #764ba2;
+            font-size: 1.1em;
+        }
+        
+        .daily-task .task {
+            color: #333;
+            margin-top: 5px;
+        }
+        
+        .daily-task .target {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        .consistency-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin: 30px 0;
+        }
+        
+        .day-box {
+            aspect-ratio: 1;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .day-box:hover {
+            transform: scale(1.05);
+            border-color: #667eea;
+        }
+        
+        .day-box.completed {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .day-box.partial {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .day-box.missed {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .day-box .date {
+            font-size: 1.2em;
+        }
+        
+        .day-box .status {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+        
+        .milestone {
+            background: linear-gradient(135deg, #ffd93d 0%, #ff6b6b 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 6px solid #ff6b6b;
+        }
+        
+        .milestone h4 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .progress-tracker {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            height: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .kpi-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border-top: 4px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .kpi-card .kpi-title {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .kpi-card .kpi-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .kpi-card .kpi-target {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .action-alert {
+            background: #ff6b6b;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🚀 GIGAMERGE STUDIO</h1>
+            <div class="dates">45-DAY VACATION DOMINATION PLAN</div>
+            <div class="dates" style="font-size: 1.2em; margin-top: 10px;">May 18, 2026 → July 1, 2026</div>
+            <div class="goal">
+                🎯 GOAL: 15-20 Paying Clients | 50+ Editors | ₹3-5L Revenue | Recognized Brand
+            </div>
+        </div>
+
+        <!-- TARGET METRICS -->
+        <div class="metrics-dashboard">
+            <div class="metric-card">
+                <div class="number">45</div>
+                <div class="label">Days to Dominate</div>
+            </div>
+            <div class="metric-card">
+                <div class="number">6.5</div>
+                <div class="label">Weeks</div>
+            </div>
+            <div class="metric-card">
+                <div class="number">20</div>
+                <div class="label">Target Clients</div>
+            </div>
+            <div class="metric-card">
+                <div class="number">50+</div>
+                <div class="label">Target Editors</div>
+            </div>
+            <div class="metric-card">
+                <div class="number">₹5L</div>
+                <div class="label">Target Revenue</div>
+            </div>
+            <div class="metric-card">
+                <div class="number">100%</div>
+                <div class="label">Consistency Goal</div>
+            </div>
+        </div>
+
+        <!-- GROWTH TRAJECTORY CHART -->
+        <div class="section">
+            <h2>📈 45-Day Growth Trajectory</h2>
+            <div class="chart-container">
+                <canvas id="growthChart"></canvas>
+            </div>
+        </div>
+
+        <!-- WEEKLY BREAKDOWN CHART -->
+        <div class="section">
+            <h2>📊 Weekly Revenue & Client Growth</h2>
+            <div class="chart-container">
+                <canvas id="weeklyChart"></canvas>
+            </div>
+        </div>
+
+        <!-- WEEK-BY-WEEK ROADMAP -->
+        <div class="section">
+            <h2>🗓️ Week-by-Week Execution Plan</h2>
+            
+            <div class="week-timeline">
+                <div class="week-card">
+                    <h3>🔥 WEEK 1</h3>
+                    <div class="focus">May 18-24: FOUNDATION</div>
+                    <ul>
+                        <li>Create Upwork + Fiverr profiles</li>
+                        <li>Build landing page (Carrd)</li>
+                        <li>Recruit 10 editors (LinkedIn/Instagram)</li>
+                        <li>Send 100 cold emails to YouTubers</li>
+                        <li>Join 10 Reddit communities</li>
+                        <li>Setup Notion project tracker</li>
+                        <li><strong>TARGET: 2-3 test clients, 10 editors</strong></li>
+                    </ul>
+                </div>
+
+                <div class="week-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <h3>⚡ WEEK 2</h3>
+                    <div class="focus">May 25-31: FIRST REVENUE</div>
+                    <ul>
+                        <li>Deliver 5 test projects (showcase quality)</li>
+                        <li>Close first 3-5 PAYING clients</li>
+                        <li>Recruit 10 more editors (total 20)</li>
+                        <li>Send 150 LinkedIn DMs</li>
+                        <li>Post daily on Instagram (before/after)</li>
+                        <li>Create testimonial collection system</li>
+                        <li><strong>TARGET: ₹40,000-60,000 revenue</strong></li>
+                    </ul>
+                </div>
+
+                <div class="week-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <h3>🚀 WEEK 3</h3>
+                    <div class="focus">Jun 1-7: SCALE OPERATIONS</div>
+                    <ul>
+                        <li>Launch referral program (10% commission)</li>
+                        <li>Partner with 2 marketing agencies</li>
+                        <li>Recruit 15 more editors (total 35)</li>
+                        <li>Reddit growth hack (free audits)</li>
+                        <li>Start YouTube channel (time-lapses)</li>
+                        <li>Build automated onboarding</li>
+                        <li><strong>TARGET: 8-10 active clients</strong></li>
+                    </ul>
+                </div>
+
+                <div class="week-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <h3>💰 WEEK 4</h3>
+                    <div class="focus">Jun 8-14: REVENUE ACCELERATION</div>
+                    <ul>
+                        <li>Launch premium packages ($500-1500)</li>
+                        <li>Close 2-3 retainer deals</li>
+                        <li>Recruit 10 more editors (total 45)</li>
+                        <li>Run first paid ads ($200 budget)</li>
+                        <li>Create 5 case studies</li>
+                        <li>Start TikTok viral strategy</li>
+                        <li><strong>TARGET: ₹1,00,000+ revenue</strong></li>
+                    </ul>
+                </div>
+
+                <div class="week-card" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333;">
+                    <h3>🎯 WEEK 5</h3>
+                    <div class="focus">Jun 15-21: BRAND BUILDING</div>
+                    <ul>
+                        <li>Launch professional website</li>
+                        <li>Recruit 5 specialist editors (total 50)</li>
+                        <li>Get featured in Indian startup media</li>
+                        <li>Run webinar for clients</li>
+                        <li>Build editor ranking system</li>
+                        <li>Expand to 3 new niches</li>
+                        <li><strong>TARGET: 15 active clients</strong></li>
+                    </ul>
+                </div>
+
+                <div class="week-card" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: #333;">
+                    <h3>🏆 WEEK 6</h3>
+                    <div class="focus">Jun 22-28: DOMINANCE MODE</div>
+                    <ul>
+                        <li>Launch automation tools (matching)</li>
+                        <li>Scale to 20 active clients</li>
+                        <li>Hire first full-time manager</li>
+                        <li>Launch editor training program</li>
+                        <li>Start podcast/YouTube content</li>
+                        <li>Build partnership pipeline</li>
+                        <li><strong>TARGET: ₹2,50,000+ revenue</strong></li>
+                    </ul>
+                </div>
+
+                <div class="week-card" style="background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); color: #333;">
+                    <h3>🌟 WEEK 7</h3>
+                    <div class="focus">Jun 29-Jul 1: MARKET LEADER</div>
+                    <ul>
+                        <li>Celebrate first ₹5L milestone</li>
+                        <li>Plan Series A prep</li>
+                        <li>Launch gamification beta</li>
+                        <li>Finalize app development plan</li>
+                        <li>Build Q3 expansion roadmap</li>
+                        <li>Team celebration & review</li>
+                        <li><strong>TARGET: Brand recognition achieved</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONSISTENCY CALENDAR -->
+        <div class="section">
+            <h2>📅 45-Day Consistency Tracker</h2>
+            <p style="margin-bottom: 20px; color: #666;">Track your daily execution. Click each day when you complete all tasks.</p>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-box" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);"></div>
+                    <span>All Tasks Done</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                    <span>Partial (50%+)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #ff6b6b;"></div>
+                    <span>Missed Day</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #f8f9fa;"></div>
+                    <span>Future Day</span>
+                </div>
+            </div>
+
+            <div id="consistencyCalendar" class="consistency-calendar"></div>
+            
+            <div class="progress-tracker">
+                <h3 style="color: #667eea; margin-bottom: 15px;">Overall Consistency Score</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="consistencyScore" style="width: 0%;">0%</div>
+                </div>
+                <p style="text-align: center; margin-top: 15px; color: #666;">
+                    <strong>Days Completed:</strong> <span id="daysCompleted">0</span> / 45 | 
+                    <strong>Streak:</strong> <span id="currentStreak">0</span> days
+                </p>
+            </div>
+        </div>
+
+        <!-- DAILY EXECUTION TEMPLATE -->
+        <div class="section">
+            <h2>⏰ Daily Execution Template (Copy Daily)</h2>
+            
+            <div class="daily-tracker">
+                <h3>Morning Block (6 AM - 10 AM)</h3>
+                <div class="daily-task">
+                    <div class="task-info">
+                        <div class="time">6:00 - 7:00 AM</div>
+                        <div class="task">Review numbers, plan day, meditation</div>
+                    </div>
+                    <div class="target">60 min</div>
+                </div>
+                <div class="daily-task">
+                    <div class="task-info">
+                        <div class="time">7:00 - 9:00 AM</div>
+                        <div class="task">Client Outreach (LinkedIn DMs + Emails)</div>
+                    </div>
+                    <div class="target">50+ contacts</div>
+                </div>
+                <div class="daily-task">
+                    <div class="task-info">
+                        <div class="time">9:00 - 10:00 AM</div>
+                        <div class="task">Quality check editor deliveries + feedback</div>
+                    </div>
+                    <div class="target">5-8 reviews</div>
+                </div>
+            </div>
+
+            <div class="daily-tracker">
+                <h3>Work Block (10 AM - 5 PM)</h3>
+                <div class="daily-task">
+                    <div class="task-info">
+                        <div class="time">10:00 AM - 12:00 PM</div>
+                        <div class="task">Project management + client meetings</div>
+                    </div>
+                    <div class="target">3-5 calls</div>
+                </div>
+                <div class="daily-task">
+                    <div class="task-info">
+                        <div class="time">12:00 - 1:00 PM</div>
+                        <div class="task">Lunch + editor recruitment</div>
+                    </div>
+                    <div class="target">10+ messages</div>
+                </div>
+                <div class="daily-task">
+                    <div class="task-info">
+                        <div class="time">1:00 - 3:00 PM</div>
+                        <div class="task">Sales calls + closing deals</div>
+                    </div>
+                    <div class="target">3-5 calls</div>
+                </div>
+                <div class="daily-task">
+                    <div class="task-info">
+                        <div class="time">3:00 - 5:00 PM</div>
+                        <div class="task">Content creation (portfolio, social media)</div>
+                    </div>
+                    <div class="target">2-3 posts</div>
+                </div>
+            </div>
+
+            <div class="daily-tracker">
+                <h3>Evening Wrap (5 PM - 7 PM)</h3>
+                <div class="daily-task">
+                    <div class="task-info">
+                        <div class="time">5:00 - 6:00 PM</div>
+                        <div class="task">Send deliveries + invoices + payments</div>
+                    </div>
+                    <div class="target">All pending</div>
+                </div>
+                <div class="daily-task">
+                    <div class="task-info">
+                        <div class="time">6:00 - 7:00 PM</div>
+                        <div class="task">Team check-in + plan tomorrow</div>
+                    </div>
+                    <div class="target">30 min</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KEY MILESTONES -->
+        <div class="section">
+            <h2>🎯 Critical Milestones</h2>
+            
+            <div class="milestone">
+                <h4>🏁 Week 1 Milestone (May 24)</h4>
+                <p>✅ 10 editors onboarded | ✅ Landing page live | ✅ 2-3 test clients | ✅ Upwork profile active</p>
+            </div>
+
+            <div class="milestone">
+                <h4>💰 Week 2 Milestone (May 31)</h4>
+                <p>✅ First ₹50,000 revenue | ✅ 20 editors | ✅ 5 paying clients | ✅ First testimonials</p>
+            </div>
+
+            <div class="milestone">
+                <h4>🚀 Week 3 Milestone (Jun 7)</h4>
+                <p>✅ 35 editors | ✅ 8-10 active clients | ✅ Referral program live | ✅ 2 agency partnerships</p>
+            </div>
+
+            <div class="milestone">
+                <h4>🎯 Week 4 Milestone (Jun 14)</h4>
+                <p>✅ ₹1,00,000+ revenue | ✅ 45 editors | ✅ Premium packages launched | ✅ 2 retainer clients</p>
+            </div>
+
+            <div class="milestone">
+                <h4>🏆 Week 5 Milestone (Jun 21)</h4>
+                <p>✅ 50+ editors | ✅ Professional website | ✅ 15 active clients | ✅ Media coverage</p>
+            </div>
+
+            <div class="milestone">
+                <h4>💎 Week 6 Milestone (Jun 28)</h4>
+                <p>✅ ₹2,50,000+ revenue | ✅ 20 clients | ✅ First hire | ✅ Automation launched</p>
+            </div>
+
+            <div class="milestone" style="background: linear-gradient(135deg, #ffd93d 0%, #38ef7d 100%);">
+                <h4>🌟 Final Milestone (Jul 1)</h4>
+                <p>✅ ₹5,00,000 total revenue | ✅ Recognized brand | ✅ Market leader position | ✅ Team of 3-5</p>
+            </div>
+        </div>
+
+        <!-- KPI TRACKER -->
+        <div class="section">
+            <h2>📊 Weekly KPI Tracker</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Clients Target</th>
+                        <th>Editors Target</th>
+                        <th>Revenue Target</th>
+                        <th>Key Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Week 1</strong><br>May 18-24</td>
+                        <td>2-3 test clients</td>
+                        <td>10 editors</td>
+                        <td>₹10,000-20,000</td>
+                        <td>Foundation setup</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Week 2</strong><br>May 25-31</td>
+                        <td>5 paying clients</td>
+                        <td>20 editors</td>
+                        <td>₹50,000-70,000</td>
+                        <td>First revenue</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Week 3</strong><br>Jun 1-7</td>
+                        <td>8-10 clients</td>
+                        <td>35 editors</td>
+                        <td>₹80,000-1,00,000</td>
+                        <td>Scale operations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Week 4</strong><br>Jun 8-14</td>
+                        <td>12-15 clients</td>
+                        <td>45 editors</td>
+                        <td>₹1,20,000-1,50,000</td>
+                        <td>Premium launch</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Week 5</strong><br>Jun 15-21</td>
+                        <td>15-18 clients</td>
+                        <td>50+ editors</td>
+                        <td>₹1,80,000-2,00,000</td>
+                        <td>Brand building</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Week 6</strong><br>Jun 22-28</td>
+                        <td>20+ clients</td>
+                        <td>60+ editors</td>
+                        <td>₹2,50,000+</td>
+                        <td>Dominance mode</td>
+                    </tr>
+                    <tr style="background: #f0f9ff;">
+                        <td><strong>Week 7</strong><br>Jun 29-Jul 1</td>
+                        <td>25+ clients</td>
+                        <td>70+ editors</td>
+                        <td>₹3,00,000+</td>
+                        <td>Market leader</td>
+                    </tr>
+                    <tr style="background: #dcfce7; font-weight: bold;">
+                        <td><strong>TOTAL</strong></td>
+                        <td>20-25</td>
+                        <td>70+</td>
+                        <td>₹5,00,000+</td>
+                        <td>DOMINATION</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- DAILY METRICS TO TRACK -->
+        <div class="section">
+            <h2>📈 Daily Success Metrics</h2>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">Client Outreach</div>
+                    <div class="kpi-value">50+</div>
+                    <div class="kpi-target">Per Day (LinkedIn + Email)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Sales Calls</div>
+                    <div class="kpi-value">3-5</div>
+                    <div class="kpi-target">Qualified leads per day</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Editor Recruitment</div>
+                    <div class="kpi-value">5-8</div>
+                    <div class="kpi-target">Messages sent daily</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Projects Delivered</div>
+                    <div class="kpi-value">2-3</div>
+                    <div class="kpi-target">Quality deliveries daily</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Content Posted</div>
+                    <div class="kpi-value">2-3</div>
+                    <div class="kpi-target">Social media posts daily</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Revenue Closed</div>
+                    <div class="kpi-value">₹5-10K</div>
+                    <div class="kpi-target">New deals per day</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CRITICAL SUCCESS CHART -->
+        <div class="section">
+            <h2>🎯 Success Probability Chart</h2>
+            <div class="chart-container">
+                <canvas id="successChart"></canvas>
+            </div>
+        </div>
+
+        <!-- ACTION ALERT -->
+        <div class="action-alert">
+            ⚠️ CONSISTENCY = SUCCESS | Miss 1 Day = Lose 3 Days of Progress
+        </div>
+
+        <!-- FINAL REMINDER -->
+        <div class="section">
+            <h2>💼 CEO Final Orders</h2>
+            <div style="background: #2d3436; color: white; padding: 30px; border-radius: 15px; font-size: 1.2em;">
+                <p style="margin-bottom: 20px;"><strong>Listen up — vacation time is NOT break time for entrepreneurs.</strong></p>
+                
+                <p style="margin-bottom: 20px;">This is your 45-day window to build something REAL while everyone else is sleeping, partying, or wasting time.</p>
+                
+                <p style="margin-bottom: 20px;"><strong>The Rules:</strong></p>
+                <ul style="padding-left: 30px; margin-bottom: 20px;">
+                    <li>Wake up at 6 AM. Every. Single. Day.</li>
+                    <li>Track EVERYTHING in this roadmap. What gets measured gets done.</li>
+                    <li>No excuses. Sick? Work from bed. Traveling? Work from train.</li>
+                    <li>Post progress updates daily (accountability).</li>
+                    <li>Miss 2 days in a row? You've already lost.</li>
+                </ul>
+                
+                <p style="margin-bottom: 20px;"><strong>By July 1, you should have:</strong></p>
+                <ul style="padding-left: 30px; margin-bottom: 20px;">
+                    <li>✅ 20-25 paying clients</li>
+                    <li>✅ 70+ skilled editors</li>
+                    <li>✅ ₹5,00,000 in revenue</li>
+                    <li>✅ A recognized brand name</li>
+                    <li>✅ Systems that run without you</li>
+                </ul>
+                
+                <p style="font-size: 1.4em; color: #ffd700; text-align: center; margin-top: 30px;">
+                    <strong>NOW STOP READING AND START EXECUTING.</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Growth Trajectory Chart
+        const growthCtx = document.getElementById('growthChart').getContext('2d');
+        new Chart(growthCtx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'],
+                datasets: [
+                    {
+                        label: 'Clients',
+                        data: [3, 5, 10, 15, 18, 20, 25],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Editors',
+                        data: [10, 20, 35, 45, 50, 60, 70],
+                        borderColor: '#764ba2',
+                        backgroundColor: 'rgba(118, 75, 162, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Weekly Revenue Chart
+        const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+        new Chart(weeklyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'],
+                datasets: [{
+                    label: 'Revenue (₹)',
+                    data: [15000, 60000, 90000, 135000, 190000, 250000, 300000],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(240, 147, 251, 0.8)',
+                        'rgba(79, 172, 254, 0.8)',
+                        'rgba(250, 112, 154, 0.8)',
+                        'rgba(168, 237, 234, 0.8)',
+                        'rgba(255, 154, 158, 0.8)',
+                        'rgba(251, 194, 235, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + (value/1000) + 'K';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Success Probability Chart
+        const successCtx = document.getElementById('successChart').getContext('2d');
+        new Chart(successCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Consistency', 'Client Outreach', 'Editor Quality', 'Revenue Focus', 'Brand Building', 'System Building'],
+                datasets: [{
+                    label: 'Required Level',
+                    data: [100, 90, 85, 95, 70, 80],
+                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                    borderColor: '#667eea',
+                    pointBackgroundColor: '#667eea',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#667eea'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Consistency Calendar Generator
+        const calendarDiv = document.getElementById('consistencyCalendar');
+        const startDate = new Date(2026, 4, 18); // May 18, 2026
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        
+        // Add day headers
+        days.forEach(day => {
+            const header = document.createElement('div');
+            header.style.textAlign = 'center';
+            header.style.fontWeight = 'bold';
+            header.style.padding = '10px';
+            header.style.color = '#667eea';
+            header.textContent = day;
+            calendarDiv.appendChild(header);
+        });
+        
+        // Add day boxes
+        for (let i = 0; i < 45; i++) {
+            const dayBox = document.createElement('div');
+            dayBox.className = 'day-box';
+            
+            const dateDiv = document.createElement('div');
+            dateDiv.className = 'date';
+            dateDiv.textContent = i + 1;
+            
+            const statusDiv = document.createElement('div');
+            statusDiv.className = 'status';
+            statusDiv.textContent = 'Day ' + (i + 1);
+            
+            dayBox.appendChild(dateDiv);
+            dayBox.appendChild(statusDiv);
+            
+            // Click handler to mark completion
+            dayBox.addEventListener('click', function() {
+                if (this.classList.contains('completed')) {
+                    this.classList.remove('completed');
+                    this.classList.add('partial');
+                } else if (this.classList.contains('partial')) {
+                    this.classList.remove('partial');
+                    this.classList.add('missed');
+                } else if (this.classList.contains('missed')) {
+                    this.classList.remove('missed');
+                } else {
+                    this.classList.add('completed');
+                }
+                updateConsistencyScore();
+            });
+            
+            calendarDiv.appendChild(dayBox);
+        }
+        
+        // Update consistency score
+        function updateConsistencyScore() {
+            const allDays = document.querySelectorAll('.day-box');
+            const completedDays = document.querySelectorAll('.day-box.completed').length;
+            const percentage = Math.round((completedDays / 45) * 100);
+            
+            document.getElementById('consistencyScore').style.width = percentage + '%';
+            document.getElementById('consistencyScore').textContent = percentage + '%';
+            document.getElementById('daysCompleted').textContent = completedDays;
+            
+            // Calculate streak
+            let streak = 0;
+            for (let i = 0; i < allDays.length; i++) {
+                if (allDays[i].classList.contains('completed')) {
+                    streak++;
+                } else {
+                    break;
+                }
+            }
+            document.getElementById('currentStreak').textContent = streak;
+        }
+    </script>
+</body>
+</html>
